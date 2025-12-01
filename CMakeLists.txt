@@ -23,11 +23,22 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(turtlesim REQUIRED)
+#find_package(turtlesim REQUIRED)
+find_package(turtlesim_msgs REQUIRED)
 
+include_directories(
+  include
+  ${turtlesim_INCLUDE_DIRS}
+)
 
 add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp)
-ament_target_dependencies(${PROJECT_NAME}_node rclcpp turtlesim std_msgs geometry_msgs)
+target_link_libraries(turtle_ctrl_node PUBLIC
+  ${geometry_msgs_TARGETS}
+  ${std_msgs_TARGETS}
+  ${turtlesim_msgs_TARGETS}
+  rclcpp::rclcpp
+)
+
 
 install(TARGETS
   ${PROJECT_NAME}_node

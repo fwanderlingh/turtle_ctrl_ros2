@@ -6,7 +6,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
-#include "turtlesim/msg/pose.hpp"
+#include "turtlesim_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 
 using std::placeholders::_1;
@@ -20,11 +20,11 @@ class TurtleControl : public rclcpp::Node
   double lambda_; // = 2.0;
   double gamma_;  // = 0.5;
 
-  rclcpp::Subscription<turtlesim::msg::Pose>::SharedPtr poseSub_;
+  rclcpp::Subscription<turtlesim_msgs::msg::Pose>::SharedPtr poseSub_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmdVelPub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
-  turtlesim::msg::Pose turtlePose_;
+  turtlesim_msgs::msg::Pose turtlePose_;
   geometry_msgs::msg::Twist turtleCmdVel_;
 
 public:
@@ -46,7 +46,7 @@ public:
     std::cout << "gamma: " <<  gamma_ << ", lambda: " << lambda_ << std::endl;
 
 
-    poseSub_ = this->create_subscription<turtlesim::msg::Pose>(
+    poseSub_ = this->create_subscription<turtlesim_msgs::msg::Pose>(
       "/turtle1/pose", 10, std::bind(&TurtleControl::pose_callback, this, _1));
 
     cmdVelPub_ = this->create_publisher<geometry_msgs::msg::Twist>("/turtle1/cmd_vel", 10);
@@ -56,7 +56,7 @@ public:
   }
 
 private:
-  void pose_callback(const turtlesim::msg::Pose::SharedPtr msg)
+  void pose_callback(const turtlesim_msgs::msg::Pose::SharedPtr msg)
   {
     turtlePose_ = *msg;
     //RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
