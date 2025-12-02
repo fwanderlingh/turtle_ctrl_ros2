@@ -1,0 +1,7 @@
+turtle_ctrl_node1:
+  ros__parameters:
+    lambda: 2.0  
+    gamma: 2.5 
+    #param_string: "Hello ROS2"  
+    #param_bool: true
+    #param_list: [1, 2, 3]  

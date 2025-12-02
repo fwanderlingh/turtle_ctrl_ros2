@@ -17,22 +17,31 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-#find_package(turtlesim REQUIRED)
 find_package(turtlesim_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Goal.msg"
+  DEPENDENCIES builtin_interfaces
+ )
 
 include_directories(
   include
   ${turtlesim_INCLUDE_DIRS}
 )
 
+ament_export_dependencies(rosidl_default_runtime)
+
+rosidl_get_typesupport_target(cpp_typesupport_target
+  ${PROJECT_NAME} rosidl_typesupport_cpp)
+
 add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp)
+#rosidl_get_typesupport_target
 target_link_libraries(turtle_ctrl_node PUBLIC
+  ${cpp_typesupport_target}
   ${geometry_msgs_TARGETS}
   ${std_msgs_TARGETS}
   ${turtlesim_msgs_TARGETS}
@@ -44,10 +53,11 @@ install(TARGETS
   ${PROJECT_NAME}_node
   DESTINATION lib/${PROJECT_NAME}
 )
+
   
 install(DIRECTORY
   launch
-  #conf
+  config
   DESTINATION share/${PROJECT_NAME}
 )
 
