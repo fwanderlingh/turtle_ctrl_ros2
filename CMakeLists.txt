@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(turtle_ctrl)
+project(turtle_ctrl_ros2)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -38,9 +38,9 @@ ament_export_dependencies(rosidl_default_runtime)
 rosidl_get_typesupport_target(cpp_typesupport_target
   ${PROJECT_NAME} rosidl_typesupport_cpp)
 
-add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}_node.cpp)
+add_executable(${PROJECT_NAME}_node src/turtle_ctrl_node.cpp)
 #rosidl_get_typesupport_target
-target_link_libraries(turtle_ctrl_node PUBLIC
+target_link_libraries(${PROJECT_NAME}_node PUBLIC
   ${cpp_typesupport_target}
   ${geometry_msgs_TARGETS}
   ${std_msgs_TARGETS}

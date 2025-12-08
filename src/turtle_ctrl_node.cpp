@@ -9,7 +9,7 @@
 #include "turtlesim_msgs/msg/pose.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
-#include "turtle_ctrl/msg/goal.hpp"
+#include "turtle_ctrl_ros2/msg/goal.hpp"
 
 using std::placeholders::_1;
 using namespace std::chrono_literals;
@@ -26,13 +26,13 @@ class TurtleControl : public rclcpp::Node
 
   rclcpp::Subscription<turtlesim_msgs::msg::Pose>::SharedPtr poseSub_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmdVelPub_;
-  rclcpp::Subscription<turtle_ctrl::msg::Goal>::SharedPtr goalSub_;
+  rclcpp::Subscription<turtle_ctrl_ros2::msg::Goal>::SharedPtr goalSub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
   turtlesim_msgs::msg::Pose turtlePose_;
   geometry_msgs::msg::Twist turtleCmdVel_;
 
-  turtle_ctrl::msg::Goal goalMsg;
+  turtle_ctrl_ros2::msg::Goal goalMsg;
 
 public:
   TurtleControl()
@@ -56,7 +56,7 @@ public:
     poseSub_ = this->create_subscription<turtlesim_msgs::msg::Pose>(
       "/turtle1/pose", 10, std::bind(&TurtleControl::pose_callback, this, _1));
       
-    goalSub_ = this->create_subscription<turtle_ctrl::msg::Goal>(
+    goalSub_ = this->create_subscription<turtle_ctrl_ros2::msg::Goal>(
       "/turtle1/goal", 10, std::bind(&TurtleControl::goal_callback, this, _1));
 
 
@@ -74,7 +74,7 @@ private:
     //std::cout << "Pose: " << msg->x << ", " << msg->y << ", " << msg->theta << std::endl; 
   }
 
-  void goal_callback(const turtle_ctrl::msg::Goal::SharedPtr msg)
+  void goal_callback(const turtle_ctrl_ros2::msg::Goal::SharedPtr msg)
   {
     goalMsg = *msg;
 
