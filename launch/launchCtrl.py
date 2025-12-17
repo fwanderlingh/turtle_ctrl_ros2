@@ -7,7 +7,7 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
 
   config = os.path.join(
-      get_package_share_directory('turtle_ctrl'),
+      get_package_share_directory('turtle_ctrl_ros2'),
       'config',
       'params.yaml'
   )
@@ -15,14 +15,14 @@ def generate_launch_description():
   return LaunchDescription([
     DeclareLaunchArgument(
         'params_file', 
-        default_value='$(find turtle_ctrl)/config/params.yaml', 
+        default_value='$(find turtle_ctrl_ros2)/config/params.yaml', 
         description='Path to the parameter file'
     ),
     
     Node(
-      package='turtle_ctrl',
+      package='turtle_ctrl_ros2',
       #namespace='turtle1',
-      executable='turtle_ctrl_node',
+      executable='turtle_ctrl_ros2_node',
       name='turtle_ctrl_node1',
       output="screen",
       #emulate_tty=True,

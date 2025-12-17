@@ -14,6 +14,8 @@
 using std::placeholders::_1;
 using namespace std::chrono_literals;
 
+// ros2 run turtle_ctrl_ros2 turtle_ctrl_ros2_node --ros-args -p lambda:=0.0 -p gamma:=0.0
+
 class TurtleControl : public rclcpp::Node
 {
   double goalX_ = 2.0;
