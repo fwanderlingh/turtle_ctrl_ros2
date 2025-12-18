@@ -11,7 +11,7 @@ colcon build --symlink-install
 Run directly the node:
 
 ```
-ros2 run turtle_ctrl_ros2 turtle_ctrl_node
+ros2 run turtle_ctrl_ros2 turtle_ctrl_ros2_node
 ```
 
 Use the launch file to set some gain parameters.
