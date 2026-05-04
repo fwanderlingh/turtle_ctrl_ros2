@@ -20,7 +20,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(turtlesim_msgs REQUIRED)
+find_package(turtlesim REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
@@ -44,7 +44,7 @@ target_link_libraries(${PROJECT_NAME}_node PUBLIC
   ${cpp_typesupport_target}
   ${geometry_msgs_TARGETS}
   ${std_msgs_TARGETS}
-  ${turtlesim_msgs_TARGETS}
+  ${turtlesim_TARGETS}
   rclcpp::rclcpp
 )
 

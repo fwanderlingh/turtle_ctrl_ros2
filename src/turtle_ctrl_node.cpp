@@ -6,7 +6,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
-#include "turtlesim_msgs/msg/pose.hpp"
+#include "turtlesim/msg/pose.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "turtle_ctrl_ros2/msg/goal.hpp"
@@ -26,12 +26,12 @@ class TurtleControl : public rclcpp::Node
 
   bool controlling = false;
 
-  rclcpp::Subscription<turtlesim_msgs::msg::Pose>::SharedPtr poseSub_;
+  rclcpp::Subscription<turtlesim::msg::Pose>::SharedPtr poseSub_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmdVelPub_;
   rclcpp::Subscription<turtle_ctrl_ros2::msg::Goal>::SharedPtr goalSub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
-  turtlesim_msgs::msg::Pose turtlePose_;
+  turtlesim::msg::Pose turtlePose_;
   geometry_msgs::msg::Twist turtleCmdVel_;
 
   turtle_ctrl_ros2::msg::Goal goalMsg;
@@ -55,7 +55,7 @@ public:
     std::cout << "gamma: " <<  gamma_ << ", lambda: " << lambda_ << std::endl;
 
 
-    poseSub_ = this->create_subscription<turtlesim_msgs::msg::Pose>(
+    poseSub_ = this->create_subscription<turtlesim::msg::Pose>(
       "/turtle1/pose", 10, std::bind(&TurtleControl::pose_callback, this, _1));
       
     goalSub_ = this->create_subscription<turtle_ctrl_ros2::msg::Goal>(
@@ -69,7 +69,7 @@ public:
   }
 
 private:
-  void pose_callback(const turtlesim_msgs::msg::Pose::SharedPtr msg)
+  void pose_callback(const turtlesim::msg::Pose::SharedPtr msg)
   {
     turtlePose_ = *msg;
     //RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
@@ -107,7 +107,7 @@ private:
       cmdVelPub_->publish(cmd);
 
 
-      std::cout << "Error: " << posErr << std::endl;
+      std::cout << "Pos: (" << turtlePose_.x << ", " << turtlePose_.y << ") - Error: " << posErr << std::endl;
       if(std::abs(posErr) < 0.05){
         RCLCPP_INFO(this->get_logger(), "Goal Reached!");
         //rclcpp::shutdown();
