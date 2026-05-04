@@ -1,5 +1,5 @@
 # turtle_ctrl_ros2
-Simple waypoint controller for the turtlesim package. Tested with Ubuntu 24.04 and ROS2 Kilted.
+Simple waypoint controller for the turtlesim package. Compatible with Ubuntu 24.04 and ROS2 Jazzy.
 
 ## Build
 
